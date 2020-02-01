@@ -4,12 +4,12 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 
 import ScreenOne from '../screens/ScreenOne';
 import ScreenTwo from '../screens/ScreenTwo';
-import ScreenTwo1 from '../screens/ScreenTwo1';
+import HomeScreen from '../screens/HomeScreen';
 
 const DrawerNavigator = createDrawerNavigator({
   One: ScreenOne,
   Two: ScreenTwo,
-  Home: ScreenTwo1,
+  Home: HomeScreen,
 });
 
 export default DrawerNavigator;
