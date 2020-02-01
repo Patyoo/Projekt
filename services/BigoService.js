@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
+import {AsyncStorage} from 'react-native';
 
 export default class BigoService extends Component {
   static APIKEY =
@@ -14,9 +15,10 @@ export default class BigoService extends Component {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'user-token': `${await AsyncStorage.getItem('token')}`,
           },
           body: JSON.stringify({
-            username: 'Hozo',
+            brand: 'LM',
           }),
         },
       );
@@ -26,22 +28,20 @@ export default class BigoService extends Component {
     }
   }
 
-  async getBigoCountUser(username: string) {
+  async getBigoCountUser() {
     try {
       let response = await fetch(
-        `https://api.backendless.com/${
-          BigoService.APIKEY
-        }/data/BigoCount?where=username%20%3D%20'${username}'&props=created&sortBy=created%20desc`,
+        `https://api.backendless.com/${BigoService.APIKEY}/data/BigoCount`,
         {
           method: 'GET',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'user-token': `${await AsyncStorage.getItem('token')}`,
           },
         },
       );
-      let responseJson = await response.json();
-      console.log(responseJson);
+      return await response.json();
     } catch (e) {
       console.log(e);
     }

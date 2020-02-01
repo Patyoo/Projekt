@@ -18,14 +18,26 @@ export default class ScreenOne extends React.Component {
 
   state = {
     counter: 0,
+    bigoHistory: [],
   };
 
   onIncrement = () => {
     this.setState({
       counter: this.state.counter + 1,
     });
-    //this.bigoService.createBigoAsync().then(r => console.log('kokot'));
-    this.bigoService.getBigoCountUser('Hozo').then(r => console.log('kokot'));
+    this.bigoService.createBigoAsync().then(r => console.log('CREATE BIGO'));
+  };
+
+  onFetch = () => {
+    this.bigoService.getBigoCountUser().then(res => {
+      this.setState({
+        counter: res.length,
+        bigoHistory: res.map(item => {
+          return {brand: item.brand, created: new Date(item.created)};
+        }),
+      });
+      console.log(this.state);
+    });
   };
 
   render() {
@@ -40,6 +52,9 @@ export default class ScreenOne extends React.Component {
           <View style={styles.midBox}>
             <TouchableOpacity onPress={this.onIncrement} style={styles.button}>
               <Text>Wow</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.onFetch} style={styles.button}>
+              <Text>Fetch</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.bottomBox}>

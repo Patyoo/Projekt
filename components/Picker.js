@@ -2,16 +2,16 @@ import React, {Component} from 'react';
 import {View, Text, Picker, StyleSheet} from 'react-native';
 
 class PickerExample extends Component {
-  state = {user: ''};
-  updateUser = user => {
-    this.setState({user: user});
+  state = {choice: ''};
+  updateUser = choice => {
+    this.setState({choice: choice});
   };
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Choosen:{this.state.user}</Text>
+        <Text style={styles.text}>Choosen:{this.state.choice}</Text>
         <Picker
-          selectedValue={this.state.user}
+          selectedValue={this.state.choice}
           onValueChange={this.updateUser}
           style={{height: 100, width: 200}}>
           <Picker.Item label="LM" value="LM" />

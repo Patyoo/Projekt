@@ -22,12 +22,44 @@ export default class AuthService extends Component {
         },
       );
       let responseJson = await response.json();
-      console.log(responseJson);
-      console.log(responseJson['user-token']);
+
       if (responseJson['user-token']) {
-        return responseJson['user-token'];
+        return {
+          token: responseJson['user-token'],
+          owner: responseJson['ownerId'],
+        };
       } else {
         return null;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async register(name: string, email: string, password: string) {
+    try {
+      let response = await fetch(
+        `https://api.backendless.com/${AuthService.APIKEY}/users/register`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+          }),
+        },
+      );
+      let responseJson = await response.json();
+      console.log(responseJson);
+      console.log(responseJson['user-token']);
+      if (responseJson.created) {
+        return true;
+      } else {
+        return false;
       }
     } catch (e) {
       console.log(e);
