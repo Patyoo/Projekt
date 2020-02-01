@@ -3,10 +3,19 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 import Header from '../components/Header.js';
 import Picker from '../components/Picker';
+import BigoService from '../services/BigoService';
 
 export default class ScreenOne extends React.Component {
   // we won't need to configure navigationOptions just yet
+
+  constructor(props) {
+    super(props);
+    this.bigoService = new BigoService();
+  }
+
   static navigationOptions = {};
+  bigoService: BigoService;
+
   state = {
     counter: 0,
   };
@@ -15,6 +24,8 @@ export default class ScreenOne extends React.Component {
     this.setState({
       counter: this.state.counter + 1,
     });
+    //this.bigoService.createBigoAsync().then(r => console.log('kokot'));
+    this.bigoService.getBigoCountUser('Hozo').then(r => console.log('kokot'));
   };
 
   render() {
