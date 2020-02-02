@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, Picker, TouchableOpacity} from 'react-native';
 
 import Header from '../components/Header.js';
-import Picker from '../components/Picker';
 import BigoService from '../services/BigoService';
 
 export default class ScreenOne extends React.Component {
@@ -11,6 +10,7 @@ export default class ScreenOne extends React.Component {
   constructor(props) {
     super(props);
     this.bigoService = new BigoService();
+    this.onFetch();
   }
 
   static navigationOptions = {};
@@ -19,13 +19,14 @@ export default class ScreenOne extends React.Component {
   state = {
     counter: 0,
     bigoHistory: [],
+    choice: '',
   };
 
   onIncrement = () => {
     this.setState({
       counter: this.state.counter + 1,
     });
-    this.bigoService.createBigoAsync().then(r => console.log('CREATE BIGO'));
+    this.bigoService.createBigoAsync(this.state.choice).then(r => console.log('CREATE BIGO'));
   };
 
   onFetch = () => {
@@ -38,6 +39,10 @@ export default class ScreenOne extends React.Component {
       });
       console.log(this.state);
     });
+  };
+
+  updateChoice = choice => {
+    this.setState({choice: choice});
   };
 
   render() {
@@ -53,12 +58,17 @@ export default class ScreenOne extends React.Component {
             <TouchableOpacity onPress={this.onIncrement} style={styles.button}>
               <Text>Wow</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.onFetch} style={styles.button}>
-              <Text>Fetch</Text>
-            </TouchableOpacity>
           </View>
           <View style={styles.bottomBox}>
-            <Picker />
+            <Text style={styles.text}>Choosen:{this.state.choice}</Text>
+            <Picker
+              selectedValue={this.state.choice}
+              onValueChange={this.updateChoice}
+              style={{height: 100, width: 200}}>
+              <Picker.Item label="LM" value="LM" />
+              <Picker.Item label="Virginia" value="Virginia" />
+              <Picker.Item label="WEST" value="West" />
+            </Picker>
           </View>
         </View>
       </React.Fragment>
@@ -110,5 +120,11 @@ const styles = StyleSheet.create({
     height: 200,
     backgroundColor: '#fff',
     borderRadius: 100,
+  },
+  text: {
+    fontSize: 50,
+    width: '100%',
+    color: 'black',
+    textAlign: 'center',
   },
 });

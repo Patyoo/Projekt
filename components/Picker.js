@@ -3,7 +3,7 @@ import {View, Text, Picker, StyleSheet} from 'react-native';
 
 class PickerExample extends Component {
   state = {choice: ''};
-  updateUser = choice => {
+  updateChoice = choice => {
     this.setState({choice: choice});
   };
   render() {
@@ -12,7 +12,7 @@ class PickerExample extends Component {
         <Text style={styles.text}>Choosen:{this.state.choice}</Text>
         <Picker
           selectedValue={this.state.choice}
-          onValueChange={this.updateUser}
+          onValueChange={this.updateChoice}
           style={{height: 100, width: 200}}>
           <Picker.Item label="LM" value="LM" />
           <Picker.Item label="Virginia" value="Virginia" />
