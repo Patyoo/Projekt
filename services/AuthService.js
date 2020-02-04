@@ -26,10 +26,37 @@ export default class AuthService extends Component {
       if (responseJson['user-token']) {
         return {
           token: responseJson['user-token'],
-          owner: responseJson['ownerId'],
+          owner: responseJson.ownerId,
         };
       } else {
         return null;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async logout() {
+    try {
+      let response = await fetch(
+        `https://api.backendless.com/${AuthService.APIKEY}/users/logout`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'user-token': AsyncStorage.getItem('token'),
+          },
+        },
+      );
+      if (!response.ok) {
+        let responseJson = await response.json();
+        // Decide according to message whats bad
+        return null;
+      } else {
+        return {
+          message: 'OK',
+        };
       }
     } catch (e) {
       console.log(e);

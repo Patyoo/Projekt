@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import StatisticsScreen from '../screens/StatisticsScreen';
+import LogoutScreen from '../screens/LogoutScreen';
 
 const DrawerNavigator = createDrawerNavigator({
   One: ScreenOne,
@@ -14,6 +15,7 @@ const DrawerNavigator = createDrawerNavigator({
   Login: LoginScreen,
   Register: RegisterScreen,
   Statistics: StatisticsScreen,
+  Logout: LogoutScreen,
 });
 
 export default DrawerNavigator;
