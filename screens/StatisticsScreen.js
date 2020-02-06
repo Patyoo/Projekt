@@ -4,42 +4,28 @@ import FusionCharts from 'react-native-fusioncharts';
 import BigoService from '../services/BigoService';
 export default class PlainColumn2D extends Component {
   state = {
-    bigoHistory: [],
-  };
-
-  constructor(props) {
-    super(props);
-    this.bigoService = new BigoService();
-    //STEP 2 - Chart Data
-    const chartData = [
-      {label: 'Venezuela', value: '290'},
-      {label: 'Saudi', value: '260'},
-      {label: 'Canada', value: '180'},
-      {label: 'Iran', value: '140'},
-      {label: 'Russia', value: '115'},
-      {label: 'UAE', value: '100'},
-      {label: 'US', value: '30'},
-      {label: 'China', value: '30'},
-    ];
-    //STEP 3 - Chart Configurations
-    const chartConfig = {
+    chartConfig: {
       type: 'column2d',
       width: '100%',
-      height: '400',
+      height: '395',
       dataFormat: 'json',
       dataSource: {
         chart: {
-          caption: 'Countries With Most Oil Reserves [2017-18]',
-          subCaption: 'In MMbbl = One Million barrels',
-          xAxisName: 'Country',
-          yAxisName: 'Reserves (MMbbl)',
-          numberSuffix: 'K',
+          caption: 'Bigo stats',
+          subCaption: 'Smoking is gut',
+          xAxisName: 'Brand',
+          yAxisName: 'Amount',
+          numberSuffix: 'ks',
           theme: 'fusion',
         },
-        data: chartData,
+        data: [],
       },
-    };
-    this.state = chartConfig;
+    },
+  };
+  libraryPath = null;
+
+  constructor(props) {
+    super(props);
     this.libraryPath = Platform.select({
       // Specify fusioncharts.html file location
       android: {
@@ -47,38 +33,35 @@ export default class PlainColumn2D extends Component {
       },
       //ios: require('./assets/fusioncharts.html'),
     });
+    this.bigoService = new BigoService();
+    this.onLoadData();
   }
+  //componentDidUpdate
 
   onLoadData = () => {
     this.bigoService.getBigoInfo().then(res => {
-      this.setState({
-        bigoHistory: res.map(item => {
-          return {count: item.count, brand: item.brand};
-        }),
+      this.state.chartConfig.dataSource.data = res.map(item => {
+        return {value: item.count, label: item.brand};
       });
+      console.log(this.state.chartConfig.dataSource.data);
     });
-    console.log(this.state.bigoHistory);
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>A Column 2D Chart</Text>
+        <Text style={styles.header}>Bigo Chart</Text>
 
         <View style={styles.chartContainer}>
           <FusionCharts
-            type={this.state.type}
-            width={this.state.width}
-            height={this.state.height}
-            dataFormat={this.state.dataFormat}
-            dataSource={this.state.dataSource}
-            libraryPath={this.libraryPath} // set the libraryPath property
+            type={this.state.chartConfig.type}
+            width={this.state.chartConfig.width}
+            height={this.state.chartConfig.height}
+            dataFormat={this.state.chartConfig.dataFormat}
+            dataSource={this.state.chartConfig.dataSource}
+            libraryPath={this.libraryPath}
           />
         </View>
-
-        <TouchableOpacity onPress={this.onLoadData}>
-          <Text>LOADDATA</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -87,7 +70,6 @@ export default class PlainColumn2D extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     padding: 10,
   },
 
