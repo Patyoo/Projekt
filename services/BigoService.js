@@ -46,4 +46,25 @@ export default class BigoService extends Component {
       console.log(e);
     }
   }
+
+  async getBigoInfo() {
+    try {
+      let response = await fetch(
+        `https://api.backendless.com/${
+          BigoService.APIKEY
+        }/data/BigoCount?props=Count(ObjectId),brand&groupBy=brand`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'user-token': `${await AsyncStorage.getItem('token')}`,
+          },
+        },
+      );
+      return await response.json();
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

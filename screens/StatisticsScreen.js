@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FusionCharts from 'react-native-fusioncharts';
+import BigoService from '../services/BigoService';
 export default class PlainColumn2D extends Component {
+  state = {
+    bigoHistory: [],
+  };
+
   constructor(props) {
     super(props);
+    this.bigoService = new BigoService();
     //STEP 2 - Chart Data
     const chartData = [
       {label: 'Venezuela', value: '290'},
@@ -42,6 +48,18 @@ export default class PlainColumn2D extends Component {
       //ios: require('./assets/fusioncharts.html'),
     });
   }
+
+  onLoadData = () => {
+    this.bigoService.getBigoInfo().then(res => {
+      this.setState({
+        bigoHistory: res.map(item => {
+          return {count: item.count, brand: item.brand};
+        }),
+      });
+    });
+    console.log(this.state.bigoHistory);
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -57,6 +75,10 @@ export default class PlainColumn2D extends Component {
             libraryPath={this.libraryPath} // set the libraryPath property
           />
         </View>
+
+        <TouchableOpacity onPress={this.onLoadData}>
+          <Text>LOADDATA</Text>
+        </TouchableOpacity>
       </View>
     );
   }
