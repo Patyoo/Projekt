@@ -1,5 +1,6 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, View, Text} from 'react-native';
+import {TouchableOpacity, StyleSheet, View, Text, Image} from 'react-native';
+import icon from '../assets/images/test.png';
 
 // dorobit ikonu import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -15,7 +16,10 @@ class DrawerTrigger extends React.Component {
           this.props.navigation.dispatch(DrawerActions.openDrawer());
         }}>
         <View>
-          <Text>WOW</Text>
+          <Image
+            style={{width: 50, height: 50}}
+            source={icon}
+          />
         </View>
       </TouchableOpacity>
     );
