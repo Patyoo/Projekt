@@ -35,7 +35,23 @@ export default class PlainColumn2D extends Component {
     });
     this.bigoService = new BigoService();
     this.onLoadData();
+    //this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
   }
+
+  // forceUpdateHandler(){
+  //   console.log('Pcia');
+  //   this.onLoadData();
+  //   this.forceUpdate();
+  // };
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    this.focusListener = navigation.addListener("didFocus", () => {
+      this.onLoadData();
+      this.forceUpdate();
+    });
+  }
+
   //componentDidUpdate
 
   onLoadData = () => {
@@ -62,6 +78,9 @@ export default class PlainColumn2D extends Component {
             libraryPath={this.libraryPath}
           />
         </View>
+        <TouchableOpacity onPress={this.forceUpdateHandler} style={styles.submitButton}>
+              <Text>Refresh</Text>
+            </TouchableOpacity>
       </View>
     );
   }
@@ -84,5 +103,13 @@ const styles = StyleSheet.create({
     height: 400,
     borderColor: '#000',
     borderWidth: 1,
+  },
+  submitButton: {
+    backgroundColor: '#7a42f4',
+    padding: 10,
+    margin: 15,
+    height: 40,
+    width: '50%',
+    borderRadius: 100,
   },
 });
