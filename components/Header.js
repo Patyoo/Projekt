@@ -17,7 +17,7 @@ class Header extends React.Component {
 const styles = StyleSheet.create({
   header: {
     paddingTop: 10,
-    backgroundColor: 'whitesmoke',
+    backgroundColor: 'black',
     flexDirection: 'row',
   },
 });

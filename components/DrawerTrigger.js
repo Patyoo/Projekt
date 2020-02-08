@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet, View, Text, Image} from 'react-native';
-import icon from '../assets/images/test.png';
+import icon from '../assets/images/bigoLogo.png';
 
 // dorobit ikonu import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -17,7 +17,7 @@ class DrawerTrigger extends React.Component {
         }}>
         <View>
           <Image
-            style={{width: 50, height: 50}}
+            style={{width: 150, height: 50}}
             source={icon}
           />
         </View>

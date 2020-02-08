@@ -10,9 +10,9 @@ import StatisticsScreen from '../screens/StatisticsScreen';
 import LogoutScreen from '../screens/LogoutScreen';
 
 const DrawerNavigator = createDrawerNavigator({
+  Login: LoginScreen,
   One: ScreenOne,
   Home: HomeScreen,
-  Login: LoginScreen,
   Register: RegisterScreen,
   Statistics: StatisticsScreen,
   Logout: LogoutScreen,
