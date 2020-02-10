@@ -16,10 +16,7 @@ class DrawerTrigger extends React.Component {
           this.props.navigation.dispatch(DrawerActions.openDrawer());
         }}>
         <View>
-          <Image
-            style={{width: 150, height: 50}}
-            source={icon}
-          />
+          <Image style={{width: 150, height: 50}} source={icon} />
         </View>
       </TouchableOpacity>
     );

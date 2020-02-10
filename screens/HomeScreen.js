@@ -5,8 +5,6 @@ import Header from '../components/Header.js';
 import BigoService from '../services/BigoService';
 
 export default class ScreenOne extends React.Component {
-  // we won't need to configure navigationOptions just yet
-
   constructor(props) {
     super(props);
     this.bigoService = new BigoService();
@@ -26,7 +24,9 @@ export default class ScreenOne extends React.Component {
     this.setState({
       counter: this.state.counter + 1,
     });
-    this.bigoService.createBigoAsync(this.state.choice).then(r => console.log('CREATE BIGO'));
+    this.bigoService
+      .createBigoAsync(this.state.choice)
+      .then(r => console.log('CREATE BIGO'));
   };
 
   onFetch = () => {
@@ -37,7 +37,7 @@ export default class ScreenOne extends React.Component {
           return {brand: item.brand, created: new Date(item.created)};
         }),
       });
-      console.log(this.state);
+      console.log(this.state.bigoHistory);
     });
   };
 

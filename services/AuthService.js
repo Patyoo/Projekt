@@ -45,7 +45,7 @@ export default class AuthService extends Component {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            'user-token': AsyncStorage.getItem('token'),
+            'user-token': `${await AsyncStorage.getItem('token')}`,
           },
         },
       );
@@ -77,6 +77,7 @@ export default class AuthService extends Component {
             name: name,
             email: email,
             password: password,
+            //netraba dvakrat to iste (nazov)+netreba typ variable
           }),
         },
       );

@@ -45,8 +45,8 @@ export default class PlainColumn2D extends Component {
   // };
 
   componentDidMount() {
-    const { navigation } = this.props;
-    this.focusListener = navigation.addListener("didFocus", () => {
+    const {navigation} = this.props;
+    this.focusListener = navigation.addListener('didFocus', () => {
       this.onLoadData();
       this.forceUpdate();
     });
@@ -78,9 +78,11 @@ export default class PlainColumn2D extends Component {
             libraryPath={this.libraryPath}
           />
         </View>
-        <TouchableOpacity onPress={this.forceUpdateHandler} style={styles.submitButton}>
-              <Text>Refresh</Text>
-            </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.forceUpdateHandler}
+          style={styles.submitButton}>
+          <Text>Refresh</Text>
+        </TouchableOpacity>
       </View>
     );
   }
