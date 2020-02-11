@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, View, Text, Image} from 'react-native';
+import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import icon from '../assets/images/bigoLogo.png';
 
 // dorobit ikonu import Icon from 'react-native-vector-icons/FontAwesome';

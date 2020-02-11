@@ -1,14 +1,17 @@
-import React, {Component} from 'react';
-import {Text, View, Alert} from 'react-native';
 import {AsyncStorage} from 'react-native';
-export default class AuthService extends Component {
+import GlobalConfigManager from '../GlobalConfigManager';
+
+export default class AuthService {
   static APIKEY =
-    'ED7DC74A-5432-5A53-FF0B-4B3C625BB700/06D797EF-8242-4ABD-9794-31E3F67DD2B3';
+    GlobalConfigManager.getInstance().getApplicationID() +
+    '/' +
+    GlobalConfigManager.getInstance().getREST_API_key();
+  static HTTPS = GlobalConfigManager.getInstance().getMainRoute();
 
   async login(email: string, password: string) {
     try {
       let response = await fetch(
-        `https://api.backendless.com/${AuthService.APIKEY}/users/login`,
+        `${AuthService.HTTPS}${AuthService.APIKEY}/users/login`,
         {
           method: 'POST',
           headers: {
@@ -39,7 +42,7 @@ export default class AuthService extends Component {
   async logout() {
     try {
       let response = await fetch(
-        `https://api.backendless.com/${AuthService.APIKEY}/users/logout`,
+        `${AuthService.HTTPS}${AuthService.APIKEY}/users/logout`,
         {
           method: 'GET',
           headers: {
@@ -66,7 +69,7 @@ export default class AuthService extends Component {
   async register(name: string, email: string, password: string) {
     try {
       let response = await fetch(
-        `https://api.backendless.com/${AuthService.APIKEY}/users/register`,
+        `${AuthService.HTTPS}${AuthService.APIKEY}/users/register`,
         {
           method: 'POST',
           headers: {

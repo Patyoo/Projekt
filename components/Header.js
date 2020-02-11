@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
-// pull in from DrawerTrigger.js
 import DrawerTrigger from './DrawerTrigger';
 
 class Header extends React.Component {

@@ -1,15 +1,17 @@
-import React, {Component} from 'react';
-import {Text, View} from 'react-native';
 import {AsyncStorage} from 'react-native';
+import GlobalConfigManager from '../GlobalConfigManager';
 
-export default class BigoService extends Component {
+export default class BigoService {
   static APIKEY =
-    'ED7DC74A-5432-5A53-FF0B-4B3C625BB700/06D797EF-8242-4ABD-9794-31E3F67DD2B3';
+    GlobalConfigManager.getInstance().getApplicationID() +
+    '/' +
+    GlobalConfigManager.getInstance().getREST_API_key();
+  static HTTPS = GlobalConfigManager.getInstance().getMainRoute();
 
   async createBigoAsync(brand: string) {
     try {
       let response = await fetch(
-        `https://api.backendless.com/${BigoService.APIKEY}/data/BigoCount`,
+        `${BigoService.HTTPS}${BigoService.APIKEY}/data/BigoCount`,
         {
           method: 'POST',
           headers: {
@@ -31,7 +33,7 @@ export default class BigoService extends Component {
   async getBigoCountUser() {
     try {
       let response = await fetch(
-        `https://api.backendless.com/${BigoService.APIKEY}/data/BigoCount`,
+        `${BigoService.HTTPS}${BigoService.APIKEY}/data/BigoCount`,
         {
           method: 'GET',
           headers: {
@@ -50,7 +52,7 @@ export default class BigoService extends Component {
   async getBigoInfo() {
     try {
       let response = await fetch(
-        `https://api.backendless.com/${
+        `${BigoService.HTTPS}${
           BigoService.APIKEY
         }/data/BigoCount?props=Count(ObjectId),brand&groupBy=brand`,
         {

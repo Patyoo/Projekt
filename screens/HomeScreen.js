@@ -64,10 +64,11 @@ export default class ScreenOne extends React.Component {
             <Picker
               selectedValue={this.state.choice}
               onValueChange={this.updateChoice}
-              style={{height: 100, width: 200}}>
+              style={styles.pickerStyle}>
               <Picker.Item label="LM" value="LM" />
               <Picker.Item label="Virginia" value="Virginia" />
               <Picker.Item label="WEST" value="West" />
+              <Picker.Item label="Modaf" value="Modaf" />
             </Picker>
           </View>
         </View>
@@ -126,5 +127,9 @@ const styles = StyleSheet.create({
     width: '100%',
     color: 'black',
     textAlign: 'center',
+  },
+  pickerStyle: {
+    height: 100,
+    width: 200,
   },
 });
