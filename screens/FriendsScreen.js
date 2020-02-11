@@ -5,10 +5,12 @@ import {
   TouchableOpacity,
   Text,
   TextInput,
+  Alert,
 } from 'react-native';
 
 import Header from '../components/Header.js';
 import MessageService from '../services/MessageService';
+import {AsyncStorage} from 'react-native';
 
 export default class ScreenOne extends React.Component {
   constructor(props) {
@@ -34,6 +36,17 @@ export default class ScreenOne extends React.Component {
     this.setState({message: text});
   };
 
+  subscribe = () => {
+    this.messageService.subscribe().then(res => {
+      if (res) {
+        AsyncStorage.setItem('subscriptionId', res.subscriptionId).done();
+        AsyncStorage.getItem('subscriptionId').then(res => console.log(res));
+      } else {
+        Alert.alert('Nieco je na picu');
+      }
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -55,6 +68,11 @@ export default class ScreenOne extends React.Component {
             }}
             onChangeText={this.handleMessage}
           />
+          <TouchableOpacity
+            onPress={this.subscribe}
+            style={styles.SubmitButton}>
+            <Text>Sub</Text>
+          </TouchableOpacity>
         </View>
       </React.Fragment>
     );
