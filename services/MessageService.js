@@ -41,6 +41,26 @@ export default class MessageService {
     }
   }
 
+  async retrieveMessages() {
+    try {
+      let response = await fetch(
+        `${MessageService.HTTPS}${
+          MessageService.APIKEY
+        }/messaging/default/${await AsyncStorage.getItem('subscriptionId')}`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'user-token': `${await AsyncStorage.getItem('token')}`,
+          },
+        },
+      );
+      return await response.json();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async subscribe() {
     try {
       let response = await fetch(
