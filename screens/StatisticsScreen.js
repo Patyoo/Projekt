@@ -35,14 +35,7 @@ export default class PlainColumn2D extends Component {
     });
     this.bigoService = new BigoService();
     this.onLoadData();
-    //this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
   }
-
-  // forceUpdateHandler(){
-  //   console.log('Pcia');
-  //   this.onLoadData();
-  //   this.forceUpdate();
-  // };
 
   componentDidMount() {
     const {navigation} = this.props;
@@ -51,8 +44,6 @@ export default class PlainColumn2D extends Component {
       this.forceUpdate();
     });
   }
-
-  //componentDidUpdate
 
   onLoadData = () => {
     this.bigoService.getBigoInfo().then(res => {

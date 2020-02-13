@@ -5,19 +5,18 @@ import {
   TouchableOpacity,
   Text,
   TextInput,
-  Alert,
   ScrollView,
 } from 'react-native';
 
 import Header from '../components/Header.js';
 import MessageService from '../services/MessageService';
 import {AsyncStorage} from 'react-native';
-import {timing} from 'react-native-reanimated';
 
 export default class ScreenOne extends React.Component {
   constructor(props) {
     super(props);
     this.messageService = new MessageService();
+    this.messageService.initialize(this.onMessageReceived, this);
   }
 
   static navigationOptions = {};
@@ -26,61 +25,29 @@ export default class ScreenOne extends React.Component {
   state = {
     message: 'kokot',
     messagesHistory: [],
-    names: [
-      {name: 'Ben', id: 1},
-      {name: 'Susan', id: 2},
-      {name: 'Robert', id: 3},
-      {name: 'Mary', id: 4},
-      {name: 'Daniel', id: 5},
-      {name: 'Laura', id: 6},
-      {name: 'John', id: 7},
-      {name: 'Debra', id: 8},
-      {name: 'Aron', id: 9},
-      {name: 'Ann', id: 10},
-      {name: 'Steve', id: 11},
-      {name: 'Olivia', id: 12},
-    ],
   };
 
+  async onMessageReceived(messages) {
+    //console.log(messages.message);
+    this.setState(state => {
+      return {
+        messagesHistory: [
+          ...state.messagesHistory,
+          {
+            message: messages.message,
+            time: messages.timestamp,
+          },
+        ],
+      };
+    });
+    //console.log(this.state.messagesHistory);
+  }
+
   sendMessage = () => {
-    this.messageService
-      .sendMessage(this.state.message)
-      .then(r => console.log('CREATE MESSAGE'));
-    this.textInput.clear();
+    this.messageService.sendMessage(this.state.message);
   };
   handleMessage = text => {
     this.setState({message: text});
-  };
-
-  subscribe = () => {
-    this.messageService.subscribe().then(res => {
-      if (res) {
-        AsyncStorage.setItem('subscriptionId', res.subscriptionId).done();
-        AsyncStorage.getItem('subscriptionId').then(res => console.log(res));
-      } else {
-        Alert.alert('Nieco je na picu');
-      }
-    });
-  };
-
-  getMessages = () => {
-    this.messageService.retrieveMessages().then(res => {
-      console.log(res);
-    });
-    // this.messageService.retrieveMessages().then(res => {
-    //   // this.state.messagesHistory = res.map(item => {
-    //   //   //console.log(item);
-    //   //   return {
-    //   //     messageId: item.messageId,
-    //   //     data: item.data,
-    //   //     publishedAt: item.publishedAt,
-    //   //     publisherId: item.publisherId,
-    //   //     headers: item.headers,
-    //   //   };
-    //   // });
-    //   //console.log(this.state.messagesHistory);
-    //console.log(this.state.messagesHistory);
-    // });
   };
 
   render() {
@@ -90,9 +57,12 @@ export default class ScreenOne extends React.Component {
         <View style={styles.container}>
           <View style={styles.mainBox}>
             <ScrollView style={styles.ScrollViewStyle}>
-              {this.state.names.map((item, index) => (
-                <View key={item.id} style={styles.item}>
-                  <Text>{item.name}</Text>
+              {this.state.messagesHistory.map((item, index) => (
+                <View key={item.time} style={styles.item}>
+                  <Text style={styles.textStyleTime}>
+                    {new Date(item.time).toLocaleTimeString('en-US')}
+                  </Text>
+                  <Text style={styles.textStyleMessage}>{item.message} </Text>
                 </View>
               ))}
             </ScrollView>
@@ -101,7 +71,7 @@ export default class ScreenOne extends React.Component {
             <TouchableOpacity
               onPress={this.sendMessage}
               style={styles.SubmitButton}>
-              <Text>Send</Text>
+              <Text style={styles.textSyle}>Send</Text>
             </TouchableOpacity>
             <TextInput
               style={styles.input}
@@ -114,16 +84,6 @@ export default class ScreenOne extends React.Component {
               }}
               onChangeText={this.handleMessage}
             />
-            <TouchableOpacity
-              onPress={this.subscribe}
-              style={styles.SubmitButton}>
-              <Text>Sub</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.getMessages}
-              style={styles.SubmitButton}>
-              <Text>MESSAGE</Text>
-            </TouchableOpacity>
           </View>
         </View>
       </React.Fragment>
@@ -141,16 +101,19 @@ const styles = StyleSheet.create({
   input: {
     margin: 5,
     height: 50,
-    width: '40%',
+    width: '80%',
     borderColor: '#7a42f4',
     borderWidth: 1,
     padding: 10,
+    color: '#7a42f4',
   },
   SubmitButton: {
     marginLeft: 10,
     height: 50,
     width: 50,
-    backgroundColor: '#00BCD4',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 30,
     borderWidth: 1,
     borderColor: '#fff',
@@ -161,7 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'yellow',
+    backgroundColor: 'black',
   },
   mainBox: {
     flex: 5,
@@ -179,8 +142,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: '#7a42f4',
     width: '100%',
+    flexDirection: 'column',
   },
   ScrollViewStyle: {
     width: '100%',
+  },
+  textSyle: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#7a42f4',
+  },
+  textStyleTime: {
+    textAlign: 'left',
+    width: '100%',
+    backgroundColor: 'yellow',
+  },
+  textStyleMessage: {
+    textAlign: 'left',
+    width: '100%',
+    backgroundColor: 'green',
+    paddingLeft: 5,
   },
 });

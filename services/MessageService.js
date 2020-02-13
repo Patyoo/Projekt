@@ -1,97 +1,21 @@
 import {AsyncStorage} from 'react-native';
 import GlobalConfigManager from '../GlobalConfigManager';
+import Backendless from 'backendless';
 
 export default class MessageService {
-  static APIKEY =
-    GlobalConfigManager.getInstance().getApplicationID() +
-    '/' +
-    GlobalConfigManager.getInstance().getREST_API_key();
-  static HTTPS = GlobalConfigManager.getInstance().getMainRoute();
-
   async sendMessage(message: string) {
-    try {
-      let response = await fetch(
-        `${MessageService.HTTPS}${MessageService.APIKEY}/messaging/default`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'user-token': `${await AsyncStorage.getItem('token')}`,
-          },
-          body: JSON.stringify({
-            message: message,
-            publisherId: 12232,
-            headers: {key1: message, key2: message},
-            //publishAt: new Date().getTime(),
-          }),
-        },
-      );
-      let responseJson = await response.json();
-      console.log(responseJson);
-
-      //   if (responseJson.status) {
-      //     console.log('KOKOT');
-      //   } else {
-      //     console.log('PICA');
-      //     return null;
-      //   }
-    } catch (e) {
-      console.log(e);
-    }
+    Backendless.Messaging.publish('default', message ?? 'wow');
   }
 
-  async retrieveMessages() {
-    try {
-      let response = await fetch(
-        `${MessageService.HTTPS}${
-          MessageService.APIKEY
-        }/messaging/default/${await AsyncStorage.getItem('subscriptionId')}`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'user-token': `${await AsyncStorage.getItem('token')}`,
-          },
-        },
-      );
-      return await response.json();
-    } catch (e) {
-      console.log(e);
-    }
+  constructor() {
+    Backendless.initApp(
+      GlobalConfigManager.getInstance().getApplicationID(),
+      GlobalConfigManager.getInstance().getAndroid_API_key(),
+    );
   }
 
-  async subscribe() {
-    try {
-      let response = await fetch(
-        `${MessageService.HTTPS}${
-          MessageService.APIKEY
-        }/messaging/default/subscribe`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'user-token': `${await AsyncStorage.getItem('token')}`,
-          },
-          body: JSON.stringify({
-            publisherId: 12232,
-            //publishAt: new Date().getTime(),
-          }),
-        },
-      );
-      let responseJson = await response.json();
-      console.log(responseJson);
-
-      if (responseJson.subscriptionId) {
-        return {
-          subscriptionId: responseJson.subscriptionId,
-        };
-      } else {
-        return null;
-      }
-    } catch (e) {
-      console.log(e);
-    }
+  initialize(onMessageReceived, ctx) {
+    var channel = Backendless.Messaging.subscribe('default');
+    channel.addMessageListener(onMessageReceived.bind(ctx));
   }
 }
