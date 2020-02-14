@@ -29,8 +29,7 @@ export default class ScreenOne extends React.Component {
   };
 
   async onMessageReceived(messages) {
-    console.log(messages);
-    //console.log(messages.message);
+    // console.log(messages.message);
     this.setState(state => {
       return {
         messagesHistory: [
@@ -38,6 +37,7 @@ export default class ScreenOne extends React.Component {
           {
             message: messages.message,
             time: messages.timestamp,
+            name: messages.headers.name,
           },
         ],
       };
@@ -67,7 +67,7 @@ export default class ScreenOne extends React.Component {
                   <Text style={styles.textStyleTime}>
                     {new Date(item.time).toLocaleTimeString('en-US')}
                   </Text>
-                  <Text style={styles.textStyleTime}>{this.state.name}</Text>
+                  <Text style={styles.textStyleTime}>{item.name}</Text>
                   <Text style={styles.textStyleMessage}>{item.message} </Text>
                 </View>
               ))}

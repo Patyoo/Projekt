@@ -4,7 +4,15 @@ import Backendless from 'backendless';
 
 export default class MessageService {
   async sendMessage(message: string) {
-    Backendless.Messaging.publish('default', message ?? 'wow');
+    Backendless.Messaging.publish(
+      'default',
+      message ?? 'wow',
+      new Backendless.PublishOptions({
+        headers: {
+          name: `${await AsyncStorage.getItem('name')}`,
+        },
+      }),
+    );
   }
 
   constructor() {
