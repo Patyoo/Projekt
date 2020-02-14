@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Text, Picker, TouchableOpacity} from 'react-native';
+import {View, Text, Picker, TouchableOpacity} from 'react-native';
 
+import {flexBoxes, buttons, texts, pickers} from '../ComponentStyles';
 import Header from '../components/Header.js';
 import BigoService from '../services/BigoService';
 
@@ -52,24 +53,23 @@ export default class ScreenOne extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <View style={styles.container}>
-          <View style={styles.topBox}>
-            <Text style={styles.counter}>
-              Smoked: {this.state.counter} bigos
-            </Text>
+        <View style={flexBoxes.container}>
+          <View style={flexBoxes.topBox}>
+            <Text style={texts.basic}>Smoked: {this.state.counter} bigos</Text>
           </View>
 
-          <View style={styles.midBox}>
-            <TouchableOpacity onPress={this.onIncrement} style={styles.button}>
+          <View style={flexBoxes.midBox}>
+            <TouchableOpacity onPress={this.onIncrement} style={buttons.round}>
               <Text>Bigo</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.bottomBox}>
-            <Text style={styles.text}>Choosen brand:{this.state.choice}</Text>
+
+          <View style={flexBoxes.bottomBox}>
+            <Text style={texts.basic}>Choosen brand:{this.state.choice}</Text>
             <Picker
               selectedValue={this.state.choice}
               onValueChange={this.updateChoice}
-              style={styles.pickerStyle}>
+              style={pickers.basic}>
               <Picker.Item label="LM" value="LM" />
               <Picker.Item label="Virginia" value="Virginia" />
               <Picker.Item label="WEST" value="West" />
@@ -81,60 +81,3 @@ export default class ScreenOne extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'grey',
-    flex: 1,
-  },
-  topBox: {
-    flex: 4,
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
-  },
-  midBox: {
-    flex: 6,
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'blue',
-  },
-  bottomBox: {
-    flex: 4,
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'green',
-  },
-  counter: {
-    fontSize: 25,
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 200,
-    height: 200,
-    backgroundColor: '#fff',
-    borderRadius: 100,
-  },
-  text: {
-    fontSize: 30,
-    width: '100%',
-    color: 'black',
-    textAlign: 'center',
-  },
-  pickerStyle: {
-    height: 100,
-    width: 200,
-  },
-});

@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  StyleSheet,
   TouchableOpacity,
   Text,
   TextInput,
@@ -11,6 +10,7 @@ import {
 import Header from '../components/Header.js';
 import MessageService from '../services/MessageService';
 import {AsyncStorage} from 'react-native';
+import {inputs, flexBoxes, buttons, texts} from '../ComponentStyles.js';
 
 export default class ScreenOne extends React.Component {
   constructor(props) {
@@ -59,28 +59,26 @@ export default class ScreenOne extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <View style={styles.container}>
-          <View style={styles.mainBox}>
-            <ScrollView style={styles.ScrollViewStyle}>
+        <View style={flexBoxes.container}>
+          <View style={flexBoxes.mainMessageBox}>
+            <ScrollView style={flexBoxes.ScrollBoxStyle}>
               {this.state.messagesHistory.map((item, index) => (
-                <View key={item.time} style={styles.item}>
-                  <Text style={styles.textStyleTime}>
+                <View key={item.time} style={flexBoxes.scrollViewBox}>
+                  <Text style={texts.textStyleTime}>
                     {new Date(item.time).toLocaleTimeString('en-US')}
                   </Text>
-                  <Text style={styles.textStyleTime}>{item.name}</Text>
-                  <Text style={styles.textStyleMessage}>{item.message} </Text>
+                  <Text style={texts.textStyleTime}>{item.name}</Text>
+                  <Text style={texts.textStyleMessage}>{item.message} </Text>
                 </View>
               ))}
             </ScrollView>
           </View>
-          <View style={styles.bottomBox}>
-            <TouchableOpacity
-              onPress={this.sendMessage}
-              style={styles.SubmitButton}>
-              <Text style={styles.textSyle}>Send</Text>
+          <View style={flexBoxes.messageBox}>
+            <TouchableOpacity onPress={this.sendMessage} style={buttons.small}>
+              <Text style={texts.smallButtonText}>Send</Text>
             </TouchableOpacity>
             <TextInput
-              style={styles.input}
+              style={inputs.message}
               underlineColorAndroid="transparent"
               placeholder="Your message"
               placeholderTextColor="#9a73ef"
@@ -96,78 +94,3 @@ export default class ScreenOne extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
-  input: {
-    margin: 5,
-    height: 50,
-    width: '80%',
-    borderColor: '#7a42f4',
-    borderWidth: 1,
-    padding: 10,
-    color: '#7a42f4',
-  },
-  SubmitButton: {
-    marginLeft: 10,
-    height: 50,
-    width: 50,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 30,
-    borderWidth: 1,
-    borderColor: '#fff',
-  },
-  bottomBox: {
-    flex: 1,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-  mainBox: {
-    flex: 5,
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  item: {
-    alignItems: 'center',
-    padding: 20,
-    margin: 2,
-    borderColor: '#2a4944',
-    borderWidth: 1,
-    backgroundColor: '#7a42f4',
-    width: '100%',
-    flexDirection: 'column',
-  },
-  ScrollViewStyle: {
-    width: '100%',
-  },
-  textSyle: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: '#7a42f4',
-  },
-  textStyleTime: {
-    textAlign: 'left',
-    width: '100%',
-    backgroundColor: 'yellow',
-  },
-  textStyleMessage: {
-    textAlign: 'left',
-    width: '100%',
-    backgroundColor: 'green',
-    paddingLeft: 5,
-  },
-});

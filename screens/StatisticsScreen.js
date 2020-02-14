@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, Text, TouchableOpacity, View} from 'react-native';
 import FusionCharts from 'react-native-fusioncharts';
 import BigoService from '../services/BigoService';
+import {flexBoxes, buttons, texts, pickers, inputs} from '../ComponentStyles';
 export default class PlainColumn2D extends Component {
   state = {
     chartConfig: {
@@ -56,10 +57,10 @@ export default class PlainColumn2D extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Bigo Chart</Text>
+      <View style={flexBoxes.chartContainer}>
+        <Text style={texts.header}>Bigo Chart</Text>
 
-        <View style={styles.chartContainer}>
+        <View style={flexBoxes.chartContainerBox}>
           <FusionCharts
             type={this.state.chartConfig.type}
             width={this.state.chartConfig.width}
@@ -69,40 +70,7 @@ export default class PlainColumn2D extends Component {
             libraryPath={this.libraryPath}
           />
         </View>
-        <TouchableOpacity
-          onPress={this.forceUpdateHandler}
-          style={styles.submitButton}>
-          <Text>Refresh</Text>
-        </TouchableOpacity>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
-
-  header: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    textAlign: 'center',
-    paddingBottom: 10,
-  },
-
-  chartContainer: {
-    height: 400,
-    borderColor: '#000',
-    borderWidth: 1,
-  },
-  submitButton: {
-    backgroundColor: '#7a42f4',
-    padding: 10,
-    margin: 15,
-    height: 40,
-    width: '50%',
-    borderRadius: 100,
-  },
-});

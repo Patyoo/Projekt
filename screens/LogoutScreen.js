@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  AsyncStorage,
-  Alert,
-} from 'react-native';
+import {View, Text, TouchableOpacity, AsyncStorage, Alert} from 'react-native';
 
 // pull in the ScreenName component from ScreenName.js
-import ScreenName from '../components/ScreenName.js';
-
+import {flexBoxes, buttons, texts, pickers, inputs} from '../ComponentStyles';
 // pull in header with DrawerTrigger
 import Header from '../components/Header.js';
 import AuthService from '../services/AuthService';
@@ -42,8 +34,8 @@ export default class ScreenOne extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <View style={styles.container}>
-          <TouchableOpacity onPress={() => this.logout()} style={styles.button}>
+        <View style={flexBoxes.container}>
+          <TouchableOpacity onPress={() => this.logout()} style={buttons.round}>
             <Text>Logout</Text>
           </TouchableOpacity>
         </View>
@@ -51,21 +43,3 @@ export default class ScreenOne extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 200,
-    height: 200,
-    backgroundColor: '#fff',
-    borderRadius: 100,
-  },
-});
