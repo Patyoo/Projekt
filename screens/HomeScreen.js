@@ -17,7 +17,7 @@ export default class ScreenOne extends React.Component {
   state = {
     counter: 0,
     bigoHistory: [],
-    choice: '',
+    choice: 'LM',
   };
 
   onIncrement = () => {
@@ -54,16 +54,18 @@ export default class ScreenOne extends React.Component {
         <Header />
         <View style={styles.container}>
           <View style={styles.topBox}>
-            <Text style={styles.counter}>Counter: {this.state.counter}</Text>
+            <Text style={styles.counter}>
+              Smoked: {this.state.counter} bigos
+            </Text>
           </View>
 
           <View style={styles.midBox}>
             <TouchableOpacity onPress={this.onIncrement} style={styles.button}>
-              <Text>Wow</Text>
+              <Text>Bigo</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.bottomBox}>
-            <Text style={styles.text}>Choosen:{this.state.choice}</Text>
+            <Text style={styles.text}>Choosen brand:{this.state.choice}</Text>
             <Picker
               selectedValue={this.state.choice}
               onValueChange={this.updateChoice}
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   text: {
-    fontSize: 50,
+    fontSize: 30,
     width: '100%',
     color: 'black',
     textAlign: 'center',
