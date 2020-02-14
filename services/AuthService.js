@@ -30,6 +30,7 @@ export default class AuthService {
         return {
           token: responseJson['user-token'],
           owner: responseJson.ownerId,
+          name: responseJson.name,
         };
       } else {
         return null;

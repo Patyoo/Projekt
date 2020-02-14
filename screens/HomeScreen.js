@@ -34,7 +34,10 @@ export default class ScreenOne extends React.Component {
       this.setState({
         counter: res.length,
         bigoHistory: res.map(item => {
-          return {brand: item.brand, created: new Date(item.created)};
+          return {
+            brand: item.brand,
+            created: new Date(item.created).toLocaleTimeString('en-US'),
+          };
         }),
       });
       console.log(this.state.bigoHistory);

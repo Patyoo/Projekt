@@ -25,9 +25,11 @@ export default class ScreenOne extends React.Component {
   state = {
     message: 'kokot',
     messagesHistory: [],
+    name: '',
   };
 
   async onMessageReceived(messages) {
+    console.log(messages);
     //console.log(messages.message);
     this.setState(state => {
       return {
@@ -50,6 +52,9 @@ export default class ScreenOne extends React.Component {
     this.setState({message: text});
   };
 
+  componentDidMount = () =>
+    AsyncStorage.getItem('name').then(value => this.setState({name: value}));
+
   render() {
     return (
       <React.Fragment>
@@ -62,6 +67,7 @@ export default class ScreenOne extends React.Component {
                   <Text style={styles.textStyleTime}>
                     {new Date(item.time).toLocaleTimeString('en-US')}
                   </Text>
+                  <Text style={styles.textStyleTime}>{this.state.name}</Text>
                   <Text style={styles.textStyleMessage}>{item.message} </Text>
                 </View>
               ))}
