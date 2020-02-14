@@ -29,10 +29,11 @@ export default class ScreenOne extends React.Component {
   logout = () => {
     this.authService.logout().then(res => {
       if (res) {
-        this.props.navigation.navigate('Home');
+        AsyncStorage.removeItem('token');
+        this.props.navigation.navigate('Login');
       } else {
         //Alert.alert('Something went wrong');
-        Alert.alert('Pca');
+        Alert.alert('Nieco nie je gut');
       }
     });
   };

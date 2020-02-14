@@ -97,4 +97,20 @@ export default class AuthService {
       console.log(e);
     }
   }
+
+  async isValidUser() {
+    try {
+      let response = await fetch(
+        `${AuthService.HTTPS}${
+          AuthService.APIKEY
+        }/users/isvalidusertoken/${await AsyncStorage.getItem('token')}`,
+        {
+          method: 'GET',
+        },
+      );
+      return await response.json();
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

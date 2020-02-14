@@ -40,15 +40,24 @@ export default class ScreenTwo extends React.Component {
         AsyncStorage.setItem('token', res.token).done();
         AsyncStorage.setItem('owner', res.owner).done();
         AsyncStorage.setItem('name', res.name).done();
-        AsyncStorage.getItem('token').then(res => console.log(res));
-        AsyncStorage.getItem('owner').then(res => console.log(res));
-        AsyncStorage.getItem('name').then(res => console.log(res));
         this.props.navigation.navigate('Home');
       } else {
         Alert.alert('Invalid username or password');
       }
     });
   };
+
+  componentDidMount() {
+    const {navigation} = this.props;
+    this.focusListener = navigation.addListener('didFocus', () => {
+      this.authService.isValidUser().then(res => {
+        console.log(res);
+        if (res) {
+          this.props.navigation.navigate('Home');
+        }
+      });
+    });
+  }
 
   render() {
     return (
